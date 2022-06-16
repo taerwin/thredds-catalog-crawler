@@ -87,6 +87,12 @@ export default class Dataset {
         return `${this.parentCatalog.wmsBase}${this.urlPath}?service=WMS&version=1.3.0&request=GetCapabilities`
     }
 
+    get httpUrl () {
+        if (!this.supportsHttp) return null
+        // Assume there is only one "/" between wmsBase and urlPath.
+        return `${this.parentCatalog.httpBase}${this.urlPath}`
+    }
+
     get parentCatalog () {
         const p = this.parent
         if (p.isParentDataset) {
@@ -98,6 +104,11 @@ export default class Dataset {
     get supportsWms () {
         if (this.isParentDataset) return false
         return this.parentCatalog.supportsWms
+    }
+
+    get supportsHttp () {
+        if (this.isParentDataset) return false
+        return this.parentCatalog.supportsHttp
     }
 
 }

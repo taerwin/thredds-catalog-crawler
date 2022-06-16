@@ -35,9 +35,19 @@ export default class Catalog {
         return 'wms' in this.services
     }
 
+    //THREDDS fileServer
+    get supportsHttp () {
+        return 'http' in this.services
+    }
+
     get wmsBase () {
         if (!this.supportsWms) return null
         return `${this._rootUrl}${this.services.wms.baseUrl}`
+    }
+
+    get httpBase () {
+        if (!this.supportsHttp) return null
+        return `${this._rootUrl}${this.services.http.baseUrl}`
     }
 
     async _loadCatalog () {
